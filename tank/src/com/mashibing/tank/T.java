@@ -10,10 +10,15 @@ import java.awt.event.WindowEvent;
  */
 public class T {
 
-    public static void main(String[] args) {
-         TankFrame tankFrame = new TankFrame();
+    public static void main(String[] args)  throws InterruptedException{
 
-//        initFrame();
+         TankFrame tankFrame = new TankFrame();
+         while(true){
+             Thread.sleep(50);
+             tankFrame.repaint();
+         }
+
+
     }
 
 
