@@ -1,8 +1,10 @@
 package com.mashibing.tank.model;
 
+import com.mashibing.tank.Frame.TankFrame;
 import com.mashibing.tank.enums.Dir;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * @Author hl.she
@@ -12,16 +14,21 @@ public class Tank {
     private int x,y;
     private Dir dir=Dir.DOWN;
     private boolean moving = false;
+    private TankFrame tf = null;
 
     private static int WIDTH = 50,HEIGHT = 50;
     private static final int SPEED = 10;
+    private boolean live = true;
 
 
-    public Tank(int x,int y,Dir dir){
+
+
+    public Tank(int x,int y,Dir dir,TankFrame tf){
         super();
         this.dir = dir;
         this.x = x;
         this.y = y;
+        this.tf = tf;
     }
 
 
@@ -87,5 +94,9 @@ public class Tank {
             }
         }
 
+    }
+
+    public void fire() {
+        tf.bullets.add(new Bullet(this.x+15,this.y+15, this.dir ,tf));
     }
 }
