@@ -18,10 +18,11 @@ public class TankFrame extends Frame {
 
    Tank myTank = new Tank(25,25,Dir.DOWN);
    Bullet b = new Bullet(50,50,Dir.DOWN);
+   private final static int GAME_WIDTH= 800 , GAME_HEIGHT = 600;
 
     public TankFrame() {
 
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
         setVisible(true);
@@ -39,6 +40,27 @@ public class TankFrame extends Frame {
 
     }
 
+    Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage == null){
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.black);
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        print(gOffScreen);
+        g.drawImage(offScreenImage,0,0,null);
+
+    }
+
+    /**
+     * 画柄
+     * @param g
+     */
     @Override
     public void paint(Graphics g){
         myTank.paint(g);
@@ -56,9 +78,16 @@ public class TankFrame extends Frame {
         Boolean bU = false;
         Boolean bD = false;
 
+        /**
+         * 按键按住
+         * @param e
+         */
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
+            /**
+             * VK_LEFT - 键盘 左键
+             */
             switch (key) {
                 case KeyEvent.VK_LEFT:
                     bL = true;
@@ -79,6 +108,10 @@ public class TankFrame extends Frame {
 
         }
 
+        /**
+         * 按键松开
+         * @param e
+         */
         @Override
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();

@@ -13,6 +13,7 @@ public class Tank {
     private Dir dir=Dir.DOWN;
     private boolean moving = false;
 
+    private static int WIDTH = 50,HEIGHT = 50;
     private static final int SPEED = 10;
 
 
@@ -67,8 +68,11 @@ public class Tank {
      * @param g
      */
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.yellow);
+        g.fillRect(x, y, WIDTH, HEIGHT);
+        g.setColor(c);
         //刷新点
-        g.fillRect(x, y, 50, 50);
         move();
     }
 
