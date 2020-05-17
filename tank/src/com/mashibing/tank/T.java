@@ -1,5 +1,7 @@
 package com.mashibing.tank;
 
+import com.mashibing.tank.Frame.TankFrame;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,7 +16,7 @@ public class T {
 
          TankFrame tankFrame = new TankFrame();
          while(true){
-             Thread.sleep(50);
+             Thread.sleep(40);
              tankFrame.repaint();
          }
 
