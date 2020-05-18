@@ -37,9 +37,6 @@ public class TankFrame extends Frame {
         });
 
         this.addKeyListener(new MyKeyListener());
-
-
-
     }
 
     Image offScreenImage = null;
@@ -51,7 +48,7 @@ public class TankFrame extends Frame {
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
-        gOffScreen.setColor(Color.black);
+        gOffScreen.setColor(Color.GRAY);
         gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         gOffScreen.setColor(c);
         print(gOffScreen);
