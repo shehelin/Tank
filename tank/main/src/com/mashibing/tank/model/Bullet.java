@@ -1,6 +1,7 @@
 package com.mashibing.tank.model;
 
 import com.mashibing.tank.Frame.TankFrame;
+import com.mashibing.tank.confmgr.ResourceMgr;
 import com.mashibing.tank.enums.Dir;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.*;
  */
 public class Bullet {
     private static final int SPEED = 15;
-    private static int WIDTH = 15,HEIGHT = 15;
+    public static int WIDTH = ResourceMgr.bulletD.getWidth(), HEIGHT = ResourceMgr.bulletD.getHeight();
     private int x, y;
     private Dir dir;
     private boolean live = true;
@@ -32,10 +33,13 @@ public class Bullet {
         if(!live){
             tf.bullets.remove(this);
         }
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,WIDTH,HEIGHT);
-        g.setColor(c);
+        switch (dir){
+            case DOWN: g.drawImage(ResourceMgr.bulletD,x,y,null); break;
+            case LEFT: g.drawImage(ResourceMgr.bulletL,x,y,null); break;
+            case UP:  g.drawImage(ResourceMgr.bulletU,x,y,null);  break;
+            case RIGHT: g.drawImage(ResourceMgr.bulletR,x,y,null);break;
+            default:break;
+        }
         move();
     }
     public void move(){

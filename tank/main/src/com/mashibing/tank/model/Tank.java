@@ -1,6 +1,7 @@
 package com.mashibing.tank.model;
 
 import com.mashibing.tank.Frame.TankFrame;
+import com.mashibing.tank.confmgr.ResourceMgr;
 import com.mashibing.tank.enums.Dir;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ public class Tank {
     //坦克容器
     private TankFrame tf;
 
-    private static int WIDTH = 50, HEIGHT = 50;
+    private static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
     //移动速度
     private static final int SPEED = 10;
     //坦克存活
@@ -78,10 +79,15 @@ public class Tank {
      * @param g
      */
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.yellow);
-        g.fillRect(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+
+        switch (dir){
+            case DOWN: g.drawImage(ResourceMgr.tankD,x,y,null); break;
+            case LEFT: g.drawImage(ResourceMgr.tankL,x,y,null); break;
+            case UP:  g.drawImage(ResourceMgr.tankU,x,y,null);  break;
+            case RIGHT: g.drawImage(ResourceMgr.tankR,x,y,null);break;
+            default:break;
+        }
+
         //刷新点
         move();
     }
@@ -115,6 +121,8 @@ public class Tank {
      * 坦克开火
      */
     public void fire() {
-        tf.bullets.add(new Bullet(this.x + 15, this.y + 15, this.dir, tf));
+        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+        int bY= this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+        tf.bullets.add(new Bullet(bX,bY, this.dir, tf));
     }
 }
