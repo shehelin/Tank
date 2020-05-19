@@ -18,8 +18,9 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-   Tank myTank = new Tank(25,25,Dir.DOWN,this);
+   Tank myTank = new Tank(100,25,Dir.DOWN,this);
    public List<Bullet> bullets = new ArrayList<Bullet>();
+   public List<Tank> tanks = new ArrayList<Tank>();
    public final static int GAME_WIDTH= 800 , GAME_HEIGHT = 600;
 
     public TankFrame() {
@@ -72,6 +73,10 @@ public class TankFrame extends Frame {
         for (int i = 0 ; i<bullets.size();i++){
             bullets.get(i).paint(g);
         }
+        for (int i = 0 ; i<tanks.size();i++){
+            tanks.get(i).paint(g);
+        }
+
     }
 
     class MyKeyListener extends KeyAdapter {

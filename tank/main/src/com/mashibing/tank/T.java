@@ -1,6 +1,8 @@
 package com.mashibing.tank;
 
 import com.mashibing.tank.Frame.TankFrame;
+import com.mashibing.tank.enums.Dir;
+import com.mashibing.tank.model.Tank;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -15,6 +17,10 @@ public class T {
     public static void main(String[] args)  throws InterruptedException{
 
          TankFrame tankFrame = new TankFrame();
+
+         for(int i = 0 ; i < 5; i++){
+             tankFrame.tanks.add(new Tank(50 + i*80,200, Dir.UP,tankFrame));
+         }
          while(true){
              Thread.sleep(40);
              tankFrame.repaint();
