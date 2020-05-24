@@ -3,9 +3,11 @@ package com.mashibing.tank.model;
 import com.mashibing.tank.Frame.TankFrame;
 import com.mashibing.tank.confmgr.ResourceMgr;
 import com.mashibing.tank.enums.Dir;
+import com.mashibing.tank.enums.Group;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @Author hl.she
@@ -17,20 +19,24 @@ public class Tank {
     //方向
     private Dir dir;
     //是否移动
-    private boolean moving = false;
+    private boolean moving = true;
     //坦克容器
     private TankFrame tf;
-
+    //坦克宽高
     public static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
     //移动速度
     private static final int SPEED = 10;
     //坦克存活
     private boolean living = true;
 
+    private Random random = new Random();
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    private Group group = Group.BAD;
+
+    public Tank(int x, int y, Dir dir , Group group ,TankFrame tf) {
         super();
         this.dir = dir;
+        this.group = group;
         this.x = x;
         this.y = y;
         this.tf = tf;
@@ -116,7 +122,12 @@ public class Tank {
                 default:
                     break;
             }
+
+            if(random.nextInt(10) > 8){
+                this.fire();
+            }
         }
+
     }
 
     /**
@@ -125,7 +136,7 @@ public class Tank {
     public void fire() {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY= this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(bX,bY, this.dir, tf));
+        tf.bullets.add(new Bullet(bX,bY, this.dir, this.group,tf));
     }
 
     public boolean isLiving() {
@@ -138,5 +149,13 @@ public class Tank {
 
     public void die() {
         living = false;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

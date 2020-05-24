@@ -3,6 +3,7 @@ package com.mashibing.tank.model;
 import com.mashibing.tank.Frame.TankFrame;
 import com.mashibing.tank.confmgr.ResourceMgr;
 import com.mashibing.tank.enums.Dir;
+import com.mashibing.tank.enums.Group;
 
 import java.awt.*;
 
@@ -11,16 +12,18 @@ import java.awt.*;
  * @Date 2020/5/17 10:53
  */
 public class Bullet {
-    private static final int SPEED = 15;
+    private static final int SPEED = 8;
     public static int WIDTH = ResourceMgr.bulletD.getWidth(), HEIGHT = ResourceMgr.bulletD.getHeight();
     private int x, y;
     private Dir dir;
     private boolean living = true;
     private TankFrame tf = null;
+    private Group group = Group.BAD;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group ,TankFrame tf) {
         this.x = x;
         this.y = y;
+        this.group = group;
         this.dir = dir;
         this.tf = tf;
     }
@@ -60,6 +63,8 @@ public class Bullet {
 
 
     public void collideWith(Tank tank) {
+        if(this.group == tank.getGroup()) return;
+
         Rectangle rectangle1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
         Rectangle rectangle2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
         if(rectangle1.intersects(rectangle2)){
@@ -70,5 +75,13 @@ public class Bullet {
 
     public void die() {
      this.living = false;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

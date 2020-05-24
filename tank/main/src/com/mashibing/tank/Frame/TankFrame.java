@@ -1,6 +1,7 @@
 package com.mashibing.tank.Frame;
 
 import com.mashibing.tank.enums.Dir;
+import com.mashibing.tank.enums.Group;
 import com.mashibing.tank.model.Bullet;
 import com.mashibing.tank.model.Tank;
 
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-   Tank myTank = new Tank(100,25,Dir.DOWN,this);
+   Tank myTank = new Tank(100,25,Dir.DOWN, Group.GOOD,this);
    public List<Bullet> bullets = new ArrayList<Bullet>();
    public List<Tank> tanks = new ArrayList<Tank>();
    public final static int GAME_WIDTH= 800 , GAME_HEIGHT = 600;

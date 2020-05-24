@@ -2,6 +2,7 @@ package com.mashibing.tank;
 
 import com.mashibing.tank.Frame.TankFrame;
 import com.mashibing.tank.enums.Dir;
+import com.mashibing.tank.enums.Group;
 import com.mashibing.tank.model.Tank;
 
 import java.awt.*;
@@ -19,7 +20,7 @@ public class T {
          TankFrame tankFrame = new TankFrame();
 
          for(int i = 0 ; i < 5; i++){
-             tankFrame.tanks.add(new Tank(50 + i*80,200, Dir.UP,tankFrame));
+             tankFrame.tanks.add(new Tank(50 + i*80,200, Dir.UP, Group.BAD,tankFrame));
          }
          while(true){
              Thread.sleep(40);
