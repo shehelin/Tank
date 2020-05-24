@@ -21,11 +21,11 @@ public class Tank {
     //坦克容器
     private TankFrame tf;
 
-    private static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
+    public static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
     //移动速度
     private static final int SPEED = 10;
     //坦克存活
-    private boolean live = true;
+    private boolean living = true;
 
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
@@ -79,7 +79,9 @@ public class Tank {
      * @param g
      */
     public void paint(Graphics g) {
-
+        if(!living){
+            tf.tanks.remove(this);
+        }
         switch (dir){
             case DOWN: g.drawImage(ResourceMgr.tankD,x,y,null); break;
             case LEFT: g.drawImage(ResourceMgr.tankL,x,y,null); break;
@@ -124,5 +126,17 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY= this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
         tf.bullets.add(new Bullet(bX,bY, this.dir, tf));
+    }
+
+    public boolean isLiving() {
+        return living;
+    }
+
+    public void setLiving(boolean living) {
+        this.living = living;
+    }
+
+    public void die() {
+        living = false;
     }
 }
