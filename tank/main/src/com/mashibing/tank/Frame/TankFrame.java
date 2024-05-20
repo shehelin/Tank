@@ -6,8 +6,6 @@ import com.mashibing.tank.model.Bullet;
 import com.mashibing.tank.model.Tank;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -19,25 +17,30 @@ import java.util.List;
  */
 public class TankFrame extends Frame {
 
-   Tank myTank = new Tank(100,25,Dir.DOWN, Group.GOOD,this);
+   private Tank tank;
    public List<Bullet> bullets = new ArrayList<Bullet>();
-   public List<Tank> tanks = new ArrayList<Tank>();
+   public List<Tank> badTanks = new ArrayList<Tank>();
+   public List<Tank> onlineTanks = new ArrayList<Tank>();
    public final static int GAME_WIDTH= 800 , GAME_HEIGHT = 600;
+
+    public void setTank(Tank tank) {
+        this.tank = tank;
+    }
 
     public TankFrame() {
 
-        setSize(GAME_WIDTH, GAME_HEIGHT);
-        setResizable(false);
-        setTitle("tank war");
-        setVisible(true);
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        this.addKeyListener(new MyKeyListener());
+//        setSize(GAME_WIDTH, GAME_HEIGHT);
+//        setResizable(false);
+//        setTitle("坦克大战");
+//        setVisible(true);
+//
+//        addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowClosing(WindowEvent e) {
+//                System.exit(0);
+//            }
+//        });
+//        this.addKeyListener(new TankKeyListener(tank));
     }
 
     Image offScreenImage = null;
@@ -65,115 +68,31 @@ public class TankFrame extends Frame {
     public void paint(Graphics g){
 
         Color c = g.getColor();
-        g.setColor(Color.WHITE);
+        g.setColor(Color.RED);
         g.drawString("子弹的数量:" + bullets.size(),10,60);
-        g.drawString("敌人的数量:" + tanks.size(),10,80);
+        g.drawString("敌人的数量:" + badTanks.size(),10,80);
         g.setColor(c);
 
 
-        myTank.paint(g);
+        tank.paint(g);
         for (int i = 0 ; i<bullets.size();i++){
             bullets.get(i).paint(g);
         }
-        for (int i = 0 ; i<tanks.size();i++){
-            tanks.get(i).paint(g);
+        for (int i = 0 ; i<badTanks.size();i++){
+            badTanks.get(i).paint(g);
         }
 
         for(int i = 0 ; i<bullets.size();i++){
-            for (int j = 0 ; j < tanks.size(); j++){
-                bullets.get(i).collideWith(tanks.get(j));
+            for (int j = 0 ; j < badTanks.size(); j++){
+                bullets.get(i).collideWith(badTanks.get(j));
             }
         }
+
+
+
 
     }
 
-    class MyKeyListener extends KeyAdapter {
-        @Override
-        public void keyTyped(KeyEvent e) {
-//            System.out.println("keyTyped");
-        }
 
-        Boolean bL = false;
-        Boolean bR = false;
-        Boolean bU = false;
-        Boolean bD = false;
-
-        /**
-         * 按键按住
-         * @param e
-         */
-        @Override
-        public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            /**
-             * VK_LEFT - 键盘 左键
-             */
-            switch (key) {
-                case KeyEvent.VK_LEFT:
-                    bL = true;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    bR = true;
-                    break;
-                case KeyEvent.VK_UP:
-                    bU = true;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    bD = true;
-                    break;
-                case KeyEvent.VK_CONTROL:
-                    myTank.fire();
-                    break;
-                default:
-                    break;
-            }
-            setMainTankDir();
-
-        }
-
-        /**
-         * 按键松开
-         * @param e
-         */
-        @Override
-        public void keyReleased(KeyEvent e) {
-            int key = e.getKeyCode();
-            switch (key) {
-                case KeyEvent.VK_LEFT:
-                    bL = false;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    bR = false;
-                    break;
-                case KeyEvent.VK_UP:
-                    bU = false;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    bD = false;
-                    break;
-                case KeyEvent.VK_CONTROL:
-                    break;
-                default:
-                    break;
-            }
-            setMainTankDir();
-
-        }
-
-        private void setMainTankDir() {
-            if(!bL && !bU && !bR && !bD){
-                myTank.setMoving(false);
-            }
-           else{
-                myTank.setMoving(true);
-                if (bL) { myTank.setDir(Dir.LEFT);}
-                if (bR) { myTank.setDir(Dir.RIGHT);}
-                if (bU) { myTank.setDir(Dir.UP);}
-                if (bD) { myTank.setDir(Dir.DOWN);}
-            }
-
-        }
-
-    }
 
 }

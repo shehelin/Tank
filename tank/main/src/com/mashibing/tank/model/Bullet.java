@@ -8,6 +8,7 @@ import com.mashibing.tank.enums.Group;
 import java.awt.*;
 
 /**
+ * 子弹
  * @Author hl.she
  * @Date 2020/5/17 10:53
  */
@@ -17,8 +18,8 @@ public class Bullet {
     private int x, y;
     private Dir dir;
     private boolean living = true;
-    private TankFrame tf = null;
-    private Group group = Group.BAD;
+    private TankFrame tf ;
+    private Group group ;
 
     public Bullet(int x, int y, Dir dir, Group group ,TankFrame tf) {
         this.x = x;

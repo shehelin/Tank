@@ -25,11 +25,15 @@ public class Tank {
     //坦克宽高
     public static int WIDTH = ResourceMgr.tankD.getWidth(), HEIGHT = ResourceMgr.tankD.getHeight();
     //移动速度
-    private static final int SPEED = 10;
+    private static final int SPEED = 5;
     //坦克存活
     private boolean living = true;
 
     private Random random = new Random();
+
+    public Random getRandom() {
+        return random;
+    }
 
     private Group group = Group.BAD;
 
@@ -85,8 +89,11 @@ public class Tank {
      * @param g
      */
     public void paint(Graphics g) {
+        if (checkBoundary()){
+            setMoving(false);
+        }
         if(!living){
-            tf.tanks.remove(this);
+            tf.badTanks.remove(this);
         }
         switch (dir){
             case DOWN: g.drawImage(ResourceMgr.tankD,x,y,null); break;
@@ -96,7 +103,6 @@ public class Tank {
             default:break;
         }
 
-        //刷新点
         move();
     }
 
@@ -104,7 +110,6 @@ public class Tank {
      * 坦克移动
      */
     public void move() {
-
         if (moving) {
             switch (dir) {
                 case LEFT:
@@ -122,12 +127,11 @@ public class Tank {
                 default:
                     break;
             }
-
-            if(random.nextInt(10) > 8){
+            //随机开火
+            if( group == Group.BAD  && random.nextInt(10) > 8){
                 this.fire();
             }
         }
-
     }
 
     /**
@@ -157,5 +161,21 @@ public class Tank {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+
+    /**
+     * 校验边界值
+     * @return
+     */
+    public boolean checkBoundary() {
+        int offsetX = ResourceMgr.tankD.getWidth()/2;
+        int offsetY = ResourceMgr.tankU.getHeight()/2;
+        if ((this.getX() < offsetX && Dir.LEFT == dir)
+                || (this.getY() < offsetY && Dir.UP == dir)
+                || (this.getX() > TankFrame.GAME_WIDTH - offsetX && Dir.RIGHT == dir)
+                || this.getY() > TankFrame.GAME_HEIGHT - offsetY && Dir.DOWN == dir)
+            return true;
+        return false;
     }
 }
